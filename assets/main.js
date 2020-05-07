@@ -8,32 +8,44 @@
 // TODO 1: Use querySelector to assign EACH of the above 
 // elements to a variable, just like this:
 let searchButton = document.querySelector('#search-button')
+let textboxElement = document.querySelector('#textbox')
+let sentenceElement = document.querySelector('#sentence')
+let searchResultsElement = document.querySelector('#search-results')
 
 searchButton.addEventListener('click', function () {
  
-  // TODO 2: Write an IF statement which determines whether
-  // the user-supplied string from #textbox is included in
-  // the #sentence string.
+  let userSuppliedString = textboxElement.value.trim().toLowerCase()
+  // let sentenceString = regex(sentenceElement.innerHTML.toLowerCase())
+  let sentenceString = sentenceElement.innerHTML.toLowerCase()
+
+  if (sentenceString.includes(userSuppliedString)) {
+    searchResultsElement.innerHTML = "A match was found"
+  } else {
+    searchResultsElement.innerHTML = "No results. Too bad!"
+  }
+
+  let wordsArray = sentenceString.split(" ")
   
-  // Hint 1: To get the user-supplied string from the input 
-  // box (#textbox), use the property .value on the variable
-  // you assigned the textbox element to.
-
-  // Hint 2: To get the string contained within #sentence, use
-  // the property .innerText on the variable you assigned the
-  // #sentence element to.
-
-  // Hint 3: You can check whether string1 contains string2
-  // by using string1.includes(string2) – which will return
-  // true or false. 
-
-  // TODO 3: If the user-supplied string is included in the
-  // #sentence string, update the innerText of #search-results
-  // with a success message (such as, "A match was found!"),
-  // otherwise update it with a failure message (such as, 
-  // "No results. Too bad!")
-
+  let counter = 0
+  let wordCount = 0
+  sentenceElement.innerHTML = ""
+  while(counter < wordsArray.length){
+    let currentWord = wordsArray[counter]
+    if(currentWord.includes(userSuppliedString)){
+      wordCount+=1
+      sentenceElement.innerHTML += "<mark>"+ " " + currentWord + " "+"</mark>"
+    } else {
+      sentenceElement.innerHTML += " " + currentWord + " "
+    }
+    counter+=1
+  }
+  searchResultsElement.innerHTML += " Count: "+ wordCount
+  
 })
+
+// function regex (str) {
+//   return str.replace(/(~|`|!|@|#|$|%|^|&|\*|\(|\)|{|}|\[|\]|;|:|\"|'|<|,|\.|>|\?|\/|\\|\||-|_|\+|=)/g,"")
+// }
 
 // STRETCH GOALS (easiest to hardest):
 //
